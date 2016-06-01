@@ -1,0 +1,22 @@
+{
+  "redis-ip": "",
+  "redis-port": "",
+  "redis-password": "",
+
+  "teamspeak-ip": "",
+  "teamspeak-port": "",
+  "teamspeak-user": "",
+  "teamspeak-password": "",
+
+  "mysql-ip": "",
+  "mysql-user": "",
+  "mysql-password": "",
+  "mysql-database": "",
+
+  "default-channel": "",
+
+  "vip-rank": "",
+  "vipplus-rank": "",
+  "teamspeak-vip-rank": "",
+  "teamspeak-vipplus-rank": ""
+}
