@@ -1,7 +1,8 @@
-package net.samagames.tsbot;
+package net.samagames.tsbot.listeners;
 
+import net.samagames.tsbot.TSBot;
 import net.samagames.tsbot.commands.*;
-import net.samagames.tsbot.redis.IPacketsReceiver;
+import net.samagames.tsbot.database.IPacketsReceiver;
 
 import java.util.HashMap;
 import java.util.Map;

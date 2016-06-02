@@ -1,9 +1,10 @@
-package net.samagames.tsbot;
+package net.samagames.tsbot.listeners;
 
 import com.github.theholywaffle.teamspeak3.api.event.*;
 import com.github.theholywaffle.teamspeak3.api.wrapper.ClientInfo;
+import net.samagames.tsbot.TSBot;
 import net.samagames.tsbot.commands.TSLinkCommand;
-import net.samagames.tsbot.redis.TeamSpeakLinkBean;
+import net.samagames.tsbot.database.TeamSpeakLinkBean;
 
 /**
  * Created by Rigner for project SamaBot.

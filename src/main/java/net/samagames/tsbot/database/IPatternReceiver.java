@@ -1,4 +1,4 @@
-package net.samagames.tsbot.redis;
+package net.samagames.tsbot.database;
 
 /**
  * Created by Rigner for project TSBot.

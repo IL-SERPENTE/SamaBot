@@ -1,4 +1,4 @@
-package net.samagames.tsbot.redis;
+package net.samagames.tsbot.database;
 
 import java.sql.Timestamp;
 import java.util.UUID;

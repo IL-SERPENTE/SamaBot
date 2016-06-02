@@ -1,4 +1,4 @@
-package net.samagames.tsbot.redis;
+package net.samagames.tsbot.database;
 
 import net.samagames.tsbot.TSBot;
 import redis.clients.jedis.JedisPubSub;

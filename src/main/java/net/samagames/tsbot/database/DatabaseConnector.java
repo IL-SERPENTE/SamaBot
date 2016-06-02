@@ -1,7 +1,8 @@
-package net.samagames.tsbot.redis;
+package net.samagames.tsbot.database;
 
 import net.samagames.tsbot.TSBot;
-import net.samagames.tsbot.TSReceiver;
+import net.samagames.tsbot.listeners.GroupChangeListener;
+import net.samagames.tsbot.listeners.TSReceiver;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -83,6 +84,7 @@ public class DatabaseConnector
                 e.printStackTrace();
             }
         this.subscriber.registerReceiver(TSBot.CHANNEL, new TSReceiver(this.bot));
+        this.subscriber.registerReceiver(TSBot.CHANNEL_GROUPCHANGE, new GroupChangeListener(this.bot));
         TSBot.LOGGER.info("Correctly subscribed.");
     }
 

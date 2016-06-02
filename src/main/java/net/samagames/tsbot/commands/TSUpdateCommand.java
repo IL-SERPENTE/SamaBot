@@ -2,7 +2,7 @@ package net.samagames.tsbot.commands;
 
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 import net.samagames.tsbot.TSBot;
-import net.samagames.tsbot.redis.TeamSpeakLinkBean;
+import net.samagames.tsbot.database.TeamSpeakLinkBean;
 
 import java.util.UUID;
 

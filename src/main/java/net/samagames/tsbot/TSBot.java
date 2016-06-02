@@ -5,7 +5,8 @@ import com.github.theholywaffle.teamspeak3.TS3Config;
 import com.github.theholywaffle.teamspeak3.TS3Query;
 import com.github.theholywaffle.teamspeak3.api.event.TS3EventType;
 import net.samagames.tsbot.channels.ChannelManager;
-import net.samagames.tsbot.redis.DatabaseConnector;
+import net.samagames.tsbot.database.DatabaseConnector;
+import net.samagames.tsbot.listeners.TSListener;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +19,7 @@ public class TSBot
     public static final Logger LOGGER = Logger.getLogger("TSBot");
     public static final String CHANNEL = "tsbot";
     public static final String CHANNEL_RESPONSE = "tsbotresponse";
+    public static final String CHANNEL_GROUPCHANGE = "groupchange";
 
     private TSConfiguration configuration;
     private DatabaseConnector databaseConnector;
