@@ -26,11 +26,6 @@ public class ChannelManager
         return channelList.stream().filter(botChannel -> botChannel.getId() == id).findFirst().orElse(null);
     }
 
-    public void addChannel(BotChannel botChannel)
-    {
-        this.channelList.add(botChannel);
-    }
-
     public void removeChannel(BotChannel botChannel)
     {
         this.channelList.remove(botChannel);

@@ -17,7 +17,6 @@ import java.util.logging.Level;
 class Subscriber extends JedisPubSub
 {
     private final HashMap<String, HashSet<IPacketsReceiver>> packetsReceivers = new HashMap<>();
-    private final HashMap<String, HashSet<IPatternReceiver>> patternsReceivers = new HashMap<>();
 
     public void registerReceiver(String channel, IPacketsReceiver receiver)
     {
@@ -27,16 +26,6 @@ class Subscriber extends JedisPubSub
         receivers.add(receiver);
         this.subscribe(channel);
         packetsReceivers.put(channel, receivers);
-    }
-
-    public void registerPattern(String pattern, IPatternReceiver receiver)
-    {
-        HashSet<IPatternReceiver> receivers = patternsReceivers.get(pattern);
-        if (receivers == null)
-            receivers = new HashSet<>();
-        receivers.add(receiver);
-        this.psubscribe(pattern);
-        patternsReceivers.put(pattern, receivers);
     }
 
     @Override
@@ -57,16 +46,5 @@ class Subscriber extends JedisPubSub
     }
 
     @Override
-    public void onPMessage(String pattern, String channel, String message)
-    {
-        try
-        {
-            HashSet<IPatternReceiver> receivers = patternsReceivers.get(pattern);
-            if (receivers != null)
-                receivers.forEach((IPatternReceiver receiver) -> receiver.receive(pattern, channel, message));
-        } catch (Exception ignored)
-        {
-            ignored.printStackTrace();
-        }
-    }
+    public void onPMessage(String pattern, String channel, String message) {}
 }

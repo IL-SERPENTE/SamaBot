@@ -3,7 +3,6 @@ package net.samagames.tsbot.listeners;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
 import net.samagames.tsbot.TSBot;
 import net.samagames.tsbot.commands.TSLinkCommand;
 import net.samagames.tsbot.database.IPacketsReceiver;
@@ -47,6 +46,7 @@ public class GroupChangeListener implements IPacketsReceiver
         }
     }
 
+    @SuppressWarnings("unused")
     private class GroupChangePacket
     {
         private String type;

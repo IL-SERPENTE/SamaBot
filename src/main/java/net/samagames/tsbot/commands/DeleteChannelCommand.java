@@ -44,6 +44,7 @@ public class DeleteChannelCommand extends AbstractCommand
                 this.bot.getPubsub().respondError(args[0], "UNKNOWN");
                 return true;
             }
+            this.bot.getChannelManager().removeChannel(botChannel);
             this.bot.getPubsub().respond(args[0], "OK");
             return true;
         }

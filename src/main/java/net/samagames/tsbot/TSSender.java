@@ -48,9 +48,4 @@ public class TSSender
         else
             this.respond(sender, "ERROR");
     }
-
-    public void respond(String sender, String[] msgs)
-    {
-        this.respond(sender, String.join(":", msgs));
-    }
 }

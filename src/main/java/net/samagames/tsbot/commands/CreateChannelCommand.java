@@ -37,6 +37,12 @@ public class CreateChannelCommand extends AbstractCommand
                 this.bot.getPubsub().respondError(args[0], "UNKNOWN");
                 return true;
             }
+            for (int i = 3; i < args.length; i++)
+                if (args[i].contains("-"))
+                {
+                    String[] split = args[i].split("-");
+                    this.bot.getTs3Api().addChannelPermission(channelId, split[0], Integer.parseInt(split[1]));
+                }
             this.bot.getTs3Api().moveQuery(this.bot.getConfiguration().getDefaultChannel());
 
             BotChannel botChannel = this.bot.getChannelManager().createChannel(channelId);

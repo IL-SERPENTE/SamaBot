@@ -40,7 +40,7 @@ public class TSBot
 
         TS3Config config = new TS3Config();
         config.setHost(this.configuration.getTeamspeakIp());
-        config.setDebugLevel(Level.ALL);
+        config.setDebugLevel(Level.INFO);
         config.setFloodRate(TS3Query.FloodRate.UNLIMITED);
         config.setQueryPort(this.configuration.getTeamspeakPort());
 
@@ -74,6 +74,7 @@ public class TSBot
 
     private void end()
     {
+        this.getChannelManager().getChannelList().forEach(botChannel -> this.ts3Api.deleteChannel(botChannel.getRealId()));
         this.databaseConnector.disconnect();
         this.ts3Query.exit();
     }
@@ -86,8 +87,8 @@ public class TSBot
     public static void main(String[] args)
     {
         TSBot bot = new TSBot();
+        Runtime.getRuntime().addShutdownHook(new Thread(bot::end));
         bot.run();
-        bot.end();
         System.exit(0);
     }
 

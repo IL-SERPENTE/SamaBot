@@ -91,6 +91,8 @@ public class DatabaseConnector
     public void disconnect()
     {
         this.continueSub = false;
+        this.cachePool.close();
+        this.cachePool.destroy();
     }
 
     public Jedis getConnection()
