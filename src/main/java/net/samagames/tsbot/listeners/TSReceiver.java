@@ -25,6 +25,7 @@ public class TSReceiver implements IPacketsReceiver
         this.commands.put("deletechannel", new DeleteChannelCommand(bot));
         this.commands.put("link", new TSLinkCommand(bot));
         this.commands.put("update", new TSUpdateCommand(bot));
+        this.commands.put("move", new MoveCommand(bot));
         //TODO
     }
 
@@ -36,7 +37,6 @@ public class TSReceiver implements IPacketsReceiver
             return ;
         /*switch (args[1])
         {
-            case "move":
             case "privatemessage":
             case "channelmessage":
                 break ;
