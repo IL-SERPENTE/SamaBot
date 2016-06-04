@@ -41,7 +41,6 @@ public class MoveCommand extends AbstractCommand
                 if (bean == null)
                     continue ;
                 Client client = this.bot.getTs3Api().getClientByUId(bean.getIdentity());
-                TSBot.LOGGER.log(Level.SEVERE, client.getId() + " " + channel.getRealId());
                 if (client != null && this.bot.getTs3Api().moveClient(client.getId(), channel.getRealId()))
                     result.add(uuid);
             }

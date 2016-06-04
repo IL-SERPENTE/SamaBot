@@ -31,9 +31,9 @@ public class ChannelManager
         this.channelList.remove(botChannel);
     }
 
-    public BotChannel createChannel(int realid)
+    public BotChannel createChannel(int realId)
     {
-        BotChannel botChannel = new BotChannel(ids++, realid);
+        BotChannel botChannel = new BotChannel(ids++, realId);
         this.channelList.add(botChannel);
         return botChannel;
     }
