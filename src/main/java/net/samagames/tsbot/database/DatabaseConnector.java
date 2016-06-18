@@ -167,7 +167,8 @@ public class DatabaseConnector
         try
         {
             statement = this.connection.createStatement();
-            return statement.execute("DELETE FROM teamspeak_links WHERE uuid=UNHEX(" + uuid.toString().replace("-", "") + ")");
+            statement.execute("DELETE FROM teamspeak_links WHERE uuid=(UNHEX('" + uuid.toString().replace("-", "") + "'))");
+            return true;
         }
         catch (Exception ex)
         {
