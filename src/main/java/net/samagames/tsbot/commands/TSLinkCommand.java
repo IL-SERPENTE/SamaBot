@@ -2,10 +2,12 @@ package net.samagames.tsbot.commands;
 
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 import net.samagames.tsbot.TSBot;
+import net.samagames.tsbot.TSConfiguration;
 import net.samagames.tsbot.database.TeamSpeakLinkBean;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -74,28 +76,31 @@ public class TSLinkCommand extends AbstractCommand
         int rank = tsBot.getDatabaseConnector().getRankForPlayer(uuid);
         if (rank == -1)
             return ;
-        boolean[] vip = {(rank == tsBot.getConfiguration().getVipRank()), false};
-        boolean[] vipPlus = {(rank == tsBot.getConfiguration().getVipPlusRank()), false};
+
+        TSBot.LOGGER.info("Updating ranks for player " + uuid + " (rank = " + rank + ", clid = " + client.getId() + ", dbid = " + client.getDatabaseId() + ", removemode = " + removeOnly + ")");
+        List<TSConfiguration.RankPair> ranks = tsBot.getConfiguration().getRanks();
+        boolean[][] rankTab = new boolean[ranks.size()][2];
+        for (int i = 0; i < ranks.size(); i++)
+        {
+            rankTab[i][0] = rank == ranks.get(i).getMinecraftRankId();
+            rankTab[i][1] = false;
+        }
+
         for (int group : client.getServerGroups())
         {
-            if (group == tsBot.getConfiguration().getTeamspeakVipRank())
-            {
-                if (removeOnly || !vip[0])
-                    tsBot.getTs3Api().removeClientFromServerGroup(tsBot.getConfiguration().getTeamspeakVipRank(), client.getDatabaseId());
-                else
-                    vip[1] = true;
-            }
-            if (group == tsBot.getConfiguration().getTeamspeakVipPlusRank())
-            {
-                if (removeOnly || !vipPlus[0])
-                    tsBot.getTs3Api().removeClientFromServerGroup(tsBot.getConfiguration().getTeamspeakVipPlusRank(), client.getDatabaseId());
-                else
-                    vipPlus[1] = true;
-            }
+            for (int i = 0; i < ranks.size(); i++)
+                if (ranks.get(i).getTeamspeakRankId() == group)
+                {
+                    if (removeOnly || !rankTab[i][0])
+                        tsBot.getTs3Api().removeClientFromServerGroup(ranks.get(i).getTeamspeakRankId(), client.getDatabaseId());
+                    else
+                        rankTab[i][1] = true;
+                }
         }
-        if (vip[0] && !vip[1] && !removeOnly)
-            tsBot.getTs3Api().addClientToServerGroup(tsBot.getConfiguration().getTeamspeakVipRank(), client.getDatabaseId());
-        if (vipPlus[0] && !vipPlus[1] && !removeOnly)
-            tsBot.getTs3Api().addClientToServerGroup(tsBot.getConfiguration().getTeamspeakVipPlusRank(), client.getDatabaseId());
+
+        if (!removeOnly)
+            for (int i = 0; i < ranks.size(); i++)
+                if (rankTab[i][0] && !rankTab[i][1])
+                    tsBot.getTs3Api().addClientToServerGroup(ranks.get(i).getTeamspeakRankId(), client.getDatabaseId());
     }
 }

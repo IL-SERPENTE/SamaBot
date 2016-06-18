@@ -27,18 +27,8 @@ public class TSListener implements TS3Listener
             ClientInfo client = this.tsBot.getTs3Api().getClientInfo(e.getClientId());
             if (client == null)
                 return ;
-            if (bean == null)
-            {
-                for (int group : client.getServerGroups())
-                {
-                    if (group == this.tsBot.getConfiguration().getTeamspeakVipRank())
-                        this.tsBot.getTs3Api().removeClientFromServerGroup(this.tsBot.getConfiguration().getTeamspeakVipRank(), client.getDatabaseId());
-                    else if (group == this.tsBot.getConfiguration().getTeamspeakVipPlusRank())
-                        this.tsBot.getTs3Api().removeClientFromServerGroup(this.tsBot.getConfiguration().getTeamspeakVipPlusRank(), client.getDatabaseId());
-                }
-                return ;
-            }
-            TSLinkCommand.updateRankForPlayer(this.tsBot, bean.getUuid(), client);
+            if (bean != null)
+                TSLinkCommand.updateRankForPlayer(this.tsBot, bean.getUuid(), client);
         }).start();
     }
 

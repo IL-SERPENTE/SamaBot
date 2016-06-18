@@ -7,6 +7,8 @@ import com.google.gson.stream.JsonReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -29,10 +31,7 @@ public class TSConfiguration
     private String mysqlDatabase;
 
     private int defaultChannel;
-    private int vipRank;
-    private int vipPlusRank;
-    private int teamspeakVipRank;
-    private int teamspeakVipPlusRank;
+    private List<RankPair> ranks;
 
     public boolean reload()
     {
@@ -61,10 +60,12 @@ public class TSConfiguration
             String mysqlDatabase = rootJson.get("mysql-database").getAsString();
 
             int defaultChannel = rootJson.get("default-channel").getAsInt();
-            int vipRank = rootJson.get("vip-rank").getAsInt();
-            int vipPlusRank = rootJson.get("vipplus-rank").getAsInt();
-            int teamspeakVipRank = rootJson.get("teamspeak-vip-rank").getAsInt();
-            int teamspeakVipPlusRank = rootJson.get("teamspeak-vipplus-rank").getAsInt();
+            List<RankPair> ranks = new ArrayList<>();
+            rootJson.get("ranks").getAsJsonArray().forEach(element ->
+            {
+                String[] strings = element.getAsString().split(", ");
+                ranks.add(new RankPair(Integer.parseInt(strings[0]), Integer.parseInt(strings[1])));
+            });
 
             this.redisIp = newRedisIp;
             this.redisPort = newRedisPort;
@@ -78,10 +79,7 @@ public class TSConfiguration
             this.mysqlPassword = mysqlPassword;
             this.mysqlDatabase = mysqlDatabase;
             this.defaultChannel = defaultChannel;
-            this.vipRank = vipRank;
-            this.vipPlusRank = vipPlusRank;
-            this.teamspeakVipRank = teamspeakVipRank;
-            this.teamspeakVipPlusRank = teamspeakVipPlusRank;
+            this.ranks = ranks;
 
             TSBot.LOGGER.info("Configuration successfully loaded");
 
@@ -154,23 +152,30 @@ public class TSConfiguration
         return defaultChannel;
     }
 
-    public int getVipRank()
+    public List<RankPair> getRanks()
     {
-        return vipRank;
+        return ranks;
     }
 
-    public int getVipPlusRank()
+    public static class RankPair
     {
-        return vipPlusRank;
-    }
+        private int teamspeakRankId;
+        private int minecraftRankId;
 
-    public int getTeamspeakVipRank()
-    {
-        return teamspeakVipRank;
-    }
+        public RankPair(int teamspeakRankId, int minecraftRankId)
+        {
+            this.teamspeakRankId = teamspeakRankId;
+            this.minecraftRankId = minecraftRankId;
+        }
 
-    public int getTeamspeakVipPlusRank()
-    {
-        return teamspeakVipPlusRank;
+        public int getMinecraftRankId()
+        {
+            return this.minecraftRankId;
+        }
+
+        public int getTeamspeakRankId()
+        {
+            return this.teamspeakRankId;
+        }
     }
 }
