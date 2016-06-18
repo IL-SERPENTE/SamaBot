@@ -64,7 +64,10 @@ public class TSConfiguration
             rootJson.get("ranks").getAsJsonArray().forEach(element ->
             {
                 String[] strings = element.getAsString().split(", ");
-                ranks.add(new RankPair(Integer.parseInt(strings[0]), Integer.parseInt(strings[1])));
+                List<Integer> ids = new ArrayList<>();
+                for (int i = 1; i < strings.length; i++)
+                    ids.add(Integer.parseInt(strings[i]));
+                ranks.add(new RankPair(Integer.parseInt(strings[0]), ids));
             });
 
             this.redisIp = newRedisIp;
@@ -160,17 +163,17 @@ public class TSConfiguration
     public static class RankPair
     {
         private int teamspeakRankId;
-        private int minecraftRankId;
+        private List<Integer> minecraftRankIds;
 
-        public RankPair(int teamspeakRankId, int minecraftRankId)
+        public RankPair(int teamspeakRankId, List<Integer> minecraftRankIds)
         {
             this.teamspeakRankId = teamspeakRankId;
-            this.minecraftRankId = minecraftRankId;
+            this.minecraftRankIds = minecraftRankIds;
         }
 
-        public int getMinecraftRankId()
+        public List<Integer> getMinecraftRankIds()
         {
-            return this.minecraftRankId;
+            return this.minecraftRankIds;
         }
 
         public int getTeamspeakRankId()

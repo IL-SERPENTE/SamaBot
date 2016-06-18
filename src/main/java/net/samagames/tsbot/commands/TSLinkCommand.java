@@ -82,7 +82,7 @@ public class TSLinkCommand extends AbstractCommand
         boolean[][] rankTab = new boolean[ranks.size()][2];
         for (int i = 0; i < ranks.size(); i++)
         {
-            rankTab[i][0] = rank == ranks.get(i).getMinecraftRankId();
+            rankTab[i][0] = ranks.get(i).getMinecraftRankIds().contains(rank);
             rankTab[i][1] = false;
         }
 
