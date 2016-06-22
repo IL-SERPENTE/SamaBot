@@ -27,6 +27,7 @@ public class TSReceiver implements IPacketsReceiver
         this.commands.put("update", new TSUpdateCommand(bot));
         this.commands.put("move", new MoveCommand(bot));
         this.commands.put("clientchannelpermission", new ChangeClientPermissionCommand(bot));
+        this.commands.put("linked", new LinkedCommand(bot));
         //TODO
     }
 
