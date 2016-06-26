@@ -39,14 +39,6 @@ public class TSLinkCommand extends AbstractCommand
             {
                 this.bot.getPubsub().respondError(args[0], "ALREADY_LINKED");
                 return true;
-                /*Client client = this.bot.getTs3Api().getClientByUId(bean.getIdentity());
-                if (client != null)
-                    TSLinkCommand.updateRankForPlayer(this.bot, uuid, client, true);
-                if (!this.bot.getDatabaseConnector().removeLink(uuid))
-                {
-                    this.bot.getPubsub().respondError(args[0], "UNKNOWN");
-                    return true;
-                }*/
             }
 
             Client client = null;
@@ -63,7 +55,7 @@ public class TSLinkCommand extends AbstractCommand
             this.bot.getDatabaseConnector().addLink(new TeamSpeakLinkBean(uuid, args[3], Timestamp.from(Instant.now()), new Timestamp(client.getCreatedDate().getTime()), new Timestamp(client.getLastConnectedDate().getTime())));
 
             TSLinkCommand.updateRankForPlayer(this.bot, uuid, client);
-            this.bot.getPubsub().respond(args[0], "OK");
+            this.bot.getPubsub().respond(args[0], "LINK_OK");
         }
         catch (Exception ignored)
         {
