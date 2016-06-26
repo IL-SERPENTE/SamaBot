@@ -49,7 +49,11 @@ public class TSLinkCommand extends AbstractCommand
                 }*/
             }
 
-            Client client = this.bot.getTs3Api().getClientByUId(args[3]);
+            Client client = null;
+            try
+            {
+                client = this.bot.getTs3Api().getClientByUId(args[3]);
+            } catch (Exception ignored) {}
             if (client == null)
             {
                 this.bot.getPubsub().respondError(args[0], "INVALID_IDENTITY");
