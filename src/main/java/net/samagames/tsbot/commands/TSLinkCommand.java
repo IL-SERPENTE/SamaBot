@@ -37,14 +37,16 @@ public class TSLinkCommand extends AbstractCommand
             bean = this.bot.getDatabaseConnector().getLinkInfo(uuid);
             if (bean != null)
             {
-                Client client = this.bot.getTs3Api().getClientByUId(bean.getIdentity());
+                this.bot.getPubsub().respondError(args[0], "ALREADY_LINKED");
+                return true;
+                /*Client client = this.bot.getTs3Api().getClientByUId(bean.getIdentity());
                 if (client != null)
                     TSLinkCommand.updateRankForPlayer(this.bot, uuid, client, true);
                 if (!this.bot.getDatabaseConnector().removeLink(uuid))
                 {
                     this.bot.getPubsub().respondError(args[0], "UNKNOWN");
                     return true;
-                }
+                }*/
             }
 
             Client client = this.bot.getTs3Api().getClientByUId(args[3]);
