@@ -40,6 +40,11 @@ public class TSUnlinkCommand extends AbstractCommand
                 this.bot.getPubsub().respondError(args[0], "NOT_ONLINE");
                 return true;
             }
+            if (!this.bot.getDatabaseConnector().removeLink(uuid))
+            {
+                this.bot.getPubsub().respondError(args[0], "UNKNOWN");
+                return true;
+            }
             TSLinkCommand.updateRankForPlayer(this.bot, uuid, client, true);
             this.bot.getPubsub().respond(args[0], "UNLINK_OK");
             return true;
