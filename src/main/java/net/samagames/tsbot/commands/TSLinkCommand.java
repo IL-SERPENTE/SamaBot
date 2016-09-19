@@ -71,9 +71,7 @@ public class TSLinkCommand extends AbstractCommand
 
     public static void updateRankForPlayer(TSBot tsBot, UUID uuid, Client client, boolean removeOnly)
     {
-        int rank = tsBot.getDatabaseConnector().getRankForPlayer(uuid);
-        if (rank == -1)
-            return ;
+        int rank = uuid == null ? -1 : tsBot.getDatabaseConnector().getRankForPlayer(uuid);
 
         TSBot.LOGGER.info("Updating ranks for player " + uuid + " (rank = " + rank + ", clid = " + client.getId() + ", dbid = " + client.getDatabaseId() + ", removemode = " + removeOnly + ")");
         List<TSConfiguration.RankPair> ranks = tsBot.getConfiguration().getRanks();
@@ -84,17 +82,24 @@ public class TSLinkCommand extends AbstractCommand
             rankTab[i][1] = false;
         }
 
+        boolean removed = false;
         for (int group : client.getServerGroups())
         {
             for (int i = 0; i < ranks.size(); i++)
                 if (ranks.get(i).getTeamspeakRankId() == group)
                 {
                     if (removeOnly || !rankTab[i][0])
+                    {
                         tsBot.getTs3Api().removeClientFromServerGroup(ranks.get(i).getTeamspeakRankId(), client.getDatabaseId());
+                        removed = true;
+                    }
                     else
                         rankTab[i][1] = true;
                 }
         }
+
+        if (removed && uuid == null)
+            tsBot.getTs3Api().sendPrivateMessage(client.getId(), "Vous possédez un grade réservé aux joueurs ayant liés leur compte Minecraft et TeamSpeak. Il vous a donc été retiré. Pour le récupérer sur cette identité, veuillez taper la commande suivante en jeu : /link ts " + client.getUniqueIdentifier());
 
         if (!removeOnly)
             for (int i = 0; i < ranks.size(); i++)

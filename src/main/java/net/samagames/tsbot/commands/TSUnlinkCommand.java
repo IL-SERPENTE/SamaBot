@@ -35,17 +35,13 @@ public class TSUnlinkCommand extends AbstractCommand
             {
                 client = this.bot.getTs3Api().getClientByUId(bean.getIdentity());
             } catch (Exception ignored) {}
-            if (client == null)
-            {
-                this.bot.getPubsub().respondError(args[0], "NOT_ONLINE");
-                return true;
-            }
             if (!this.bot.getDatabaseConnector().removeLink(uuid))
             {
                 this.bot.getPubsub().respondError(args[0], "UNKNOWN");
                 return true;
             }
-            TSLinkCommand.updateRankForPlayer(this.bot, uuid, client, true);
+            if (client != null)
+                TSLinkCommand.updateRankForPlayer(this.bot, uuid, client, true);
             this.bot.getPubsub().respond(args[0], "UNLINK_OK");
             return true;
         }
